@@ -1,0 +1,4 @@
+INFO: GET /api/v1 200
+INFO: POST /api/v1 201
+ERROR: 500 Internal Error
+ERROR: Request timeout
