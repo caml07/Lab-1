@@ -15,8 +15,14 @@ const targetDir = path.resolve(process.cwd(), targetDirArg);
 const outputFile = path.resolve(process.cwd(), outputFileArg);
 
 async function analyzeLogFile(filePath) {
-  // TODO: Read the file, count lines and errors, return metrics object
+// TODO: Read the file, count lines and errors, return metrics object
 
+const content = await readFile(filePath, 'utf-8');
+const lines = content.split('\n');
+const errors = lines.filter(
+    line => line.includes("ERROR")
+  );
+const errorCount = errors.length;
 
   return {
     file: path.basename(filePath),
