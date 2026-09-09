@@ -24,3 +24,37 @@ async function analyzeLogFile(filePath) {
     errors: errorCount
   };
 }
+async function run() {
+  try {
+    // 2. Read directory entries
+    const entries = await readdir(targetDir, { withFileTypes: true });
+
+    // 3. Filter for .log files only
+    const logFiles = entries
+      .filter(entry => entry.isFile() && path.extname(entry.name) === '.log')
+      .map(entry => path.join(targetDir, entry.name));
+
+    // 4. Concurrently process files
+    const fileStats = await Promise.all(logFiles.map(analyzeLogFile));
+
+    // 5. Aggregate totals
+    const report = {
+      timestamp: new Date().toISOString(),
+      directoryScanned: targetDir,
+      filesProcessed: fileStats.length,
+      aggregateLines: fileStats.reduce((acc, curr) => acc + curr.totalLines, 0),
+      aggregateErrors: fileStats.reduce((acc, curr) => acc + curr.errors, 0),
+      details: fileStats
+    };
+
+    // 6. Write output report
+    await writeFile(outputFile, JSON.stringify(report, null, 2), 'utf-8');
+    console.log(`Success: Report written to ${outputFile}`);
+
+  } catch (error) {
+    console.error(`Fatal I/O Error: ${error.message}`);
+    process.exit(2);
+  }
+}
+
+run();
