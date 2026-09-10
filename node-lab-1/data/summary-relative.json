@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-09-10T03:04:57.790Z",
+  "directoryScanned": "C:\\Users\\deivi\\Lab-1\\node-lab-1\\data\\logs",
+  "filesProcessed": 3,
+  "aggregateLines": 12,
+  "aggregateErrors": 4,
+  "details": [
+    {
+      "file": "api.log",
+      "totalLines": 5,
+      "errors": 2
+    },
+    {
+      "file": "auth.log",
+      "totalLines": 4,
+      "errors": 1
+    },
+    {
+      "file": "db.log",
+      "totalLines": 3,
+      "errors": 1
+    }
+  ]
+}
